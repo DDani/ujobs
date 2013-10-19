@@ -1,0 +1,5 @@
+package org.ujobs.model.enums;
+
+public enum UserRelationType {
+	FRIEND, WORKER, WORKER_OF_FRIEND, OLD_WORKER, SPONSOR, SPONSOR_OF_FRIEND, SPONSORED, SPONSORED_BY_FRIEND
+}

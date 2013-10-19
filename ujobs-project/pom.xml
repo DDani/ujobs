@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.nexuus.ujobs</groupId>
+	<artifactId>ujobs-project</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>ujobs-project</name>
+	<description>Master project for the modules of uJobs</description>
+	<url>http://maven.apache.org</url>
+
+	<organization>
+		<name>Nexuus</name>
+		<url>http://www.nexuus.com/</url>
+	</organization>
+
+	<scm>
+		<connection>scm:git:git://github.com/DDani/ujobs.git</connection>
+	</scm>
+	<properties>
+		<log4j-version>1.2.17</log4j-version>
+		<drop-wizard-version>0.6.2</drop-wizard-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dropwizard-guice>0.6.2</dropwizard-guice>
+		<junit-version>4.11</junit-version>
+		<morphia-version>0.105</morphia-version>
+		<mongo-version>2.11.1</mongo-version>
+		<embbeded-mongo-version>1.40</embbeded-mongo-version>
+	</properties>
+	<developers>
+		<developer>
+			<id>dcastro</id>
+			<name>Daniel Castro</name>
+			<email>danicastro@gmail.com</email>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.yammer.dropwizard</groupId>
+				<artifactId>dropwizard-core</artifactId>
+				<version>${drop-wizard-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.yammer.dropwizard</groupId>
+				<artifactId>dropwizard-testing</artifactId>
+				<version>${drop-wizard-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.hubspot.dropwizard</groupId>
+				<artifactId>dropwizard-guice</artifactId>
+				<version>${dropwizard-guice}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.yammer.dropwizard</groupId>
+				<artifactId>dropwizard-hibernate</artifactId>
+				<version>${dropwizard-guice}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mongodb.morphia</groupId>
+				<artifactId>morphia</artifactId>
+				<version>${morphia-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+				<version>${mongo-version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit-version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+			    <groupId>de.flapdoodle.embed</groupId>
+			    <artifactId>de.flapdoodle.embed.mongo</artifactId>
+			    <version>${embbeded-mongo-version}</version>
+			    <scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+		<repository>
+			<id>repo.codahale.com</id>
+			<url>http://repo.codahale.com/</url>
+		</repository>
+		
+		<repository>
+			<id>morphia.googlecode.com</id>
+			<name>Morphia Repo at Google Code</name>
+			<url>http://morphia.googlecode.com/svn/mavenrepo</url>
+		</repository>
+	</repositories>
+
+	<modules>
+		<module>ujobs-model</module>
+		<module>ubojs-api</module>
+		<module>ujobs-service</module>
+	</modules>
+
+</project>
