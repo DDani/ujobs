@@ -8,6 +8,8 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 @Entity("User")
 public class User extends Basic   {
@@ -19,16 +21,19 @@ public class User extends Basic   {
 	private String about;
 	
 	@Embedded
-	private Set<UserAbility> userAbilities;
+	private Set<UserAbility> userAbilities = Sets.newHashSet();
+	
+	@Embedded
+	private Set<UserAbility> userHistoricAbilities  = Sets.newHashSet();
 	
 	@Reference
-	private List<Job> jobOffers;
+	private List<Job> jobOffers = Lists.newArrayList();
 	
 	@Reference
-	private List<Candidature> candidatures;
+	private List<Candidature> candidatures  = Lists.newArrayList();
 	
 	@Reference
-	private List<Candidature> sponsoredCandidatures;
+	private List<Candidature> sponsoredCandidatures  = Lists.newArrayList();
 
 	public String getName() {
 		return name;
@@ -44,6 +49,14 @@ public class User extends Basic   {
 
 	public void setUserAbilities(Set<UserAbility> userAbilities) {
 		this.userAbilities = userAbilities;
+	}
+	
+	public Set<UserAbility> getUserHistoricAbilities() {
+		return userHistoricAbilities;
+	}
+
+	public void setUserHistoricAbilities(Set<UserAbility> userHistoricAbilities) {
+		this.userHistoricAbilities = userHistoricAbilities;
 	}
 
 	public List<Job> getJobOffers() {

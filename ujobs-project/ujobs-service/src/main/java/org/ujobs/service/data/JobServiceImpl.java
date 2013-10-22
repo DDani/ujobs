@@ -13,7 +13,6 @@ import org.ujobs.service.exceptions.DataValidityException;
 
 import com.google.inject.Inject;
 import com.mongodb.WriteConcern;
-import com.yammer.dropwizard.jersey.params.LongParam;
 
 public class JobServiceImpl implements JobService {
 	
@@ -28,22 +27,23 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
-	public Job getJobById(String jobId) {
-		return jobDAO.get(ObjectId.massageToObjectId(jobId));
+	public Job getJobById(ObjectId jobId) {
+		return jobDAO.get(jobId);
 	}
 
 	@Override
-	public ObjectId createJob(Job job, User user) {
+	public Job createJob(Job job, User user) {
 		
 		job.setId(null);
 		job.setStatus(JobOfferStatusType.OPEN_FOR_CANDIDATURE);
 		job.setCreatorId(ObjectId.massageToObjectId(user.getId()));
 		Key<Job> saved = jobDAO.save(job, WriteConcern.SAFE);
-		return ObjectId.massageToObjectId(saved.getId());
+		job.setId((ObjectId) saved.getId());
+		return job;
 	}
 
 	@Override
-	public ObjectId updateJob(Job job, User user) throws DataValidityException {
+	public Job updateJob(Job job, User user) throws DataValidityException {
 		UpdateOperations<Job> updateOperations = jobDAO.createUpdateOperations();
 		updateOperations.set("title", job.getTitle());
 		updateOperations.set("description", job.getDescription());
@@ -53,10 +53,11 @@ public class JobServiceImpl implements JobService {
 	
 		
 		UpdateResults<Job> updated = jobDAO.update(job, updateOperations);
+		
 		if (updated.getHadError()) {
-			throw new DataValidityException("Unable to save entity");
+			throw new DataValidityException("Unable to update entity");
 		} else {
-			return ObjectId.massageToObjectId(updated.getNewId());
+			return getJobById(job.getId());
 		}
 	}
 	
@@ -80,6 +81,18 @@ public class JobServiceImpl implements JobService {
 		 * -The status is not backwarded, not closed
 		 * -Tags and abilities are set and not null.
 		 */
+	}
+
+	@Override
+	public Candidature addCandidate(Job job, User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Candidature removeCandidature(Job job, Candidature candidature) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -19,7 +19,10 @@ import org.ujobs.model.Candidature;
 import org.ujobs.model.Job;
 import org.ujobs.model.User;
 import org.ujobs.service.data.UserService;
+import org.ujobs.service.exceptions.DataUpdateException;
+import org.ujobs.service.exceptions.DataValidityException;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.yammer.metrics.annotation.Timed;
 
@@ -57,10 +60,10 @@ public class UserResource {
     @Timed
     public Response getUserById(@PathParam("userId") ObjectId userId) 
     {	
-    	User user = userService.getUserById(userId);
-    	if (user == null)
-    		return Response.status(Status.NOT_FOUND).build();
-    	return Response.ok(user).build();
+    	Optional<User> user = userService.getUserById(userId);
+    	if (user.isPresent())
+    		return Response.ok(user.get()).build();
+    	return Response.status(Status.NOT_FOUND).build();
     }
     
     /*
@@ -68,7 +71,7 @@ public class UserResource {
      */
     @POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUser(@Valid User user)
+	public Response updateUser(@Valid User user) throws DataValidityException, DataUpdateException
 	{
     	User updatedUser = userService.updateUser(user);
     	   	
@@ -96,6 +99,5 @@ public class UserResource {
     	return userService.getSponsorshipByUserId(ObjectId.massageToObjectId(userId));
     }
     
-   
-    
+ 
 }

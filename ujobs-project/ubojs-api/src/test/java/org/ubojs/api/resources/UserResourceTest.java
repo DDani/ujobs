@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.google.common.base.Optional;
 import com.yammer.dropwizard.testing.ResourceTest;
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -32,7 +33,7 @@ public class UserResourceTest extends ResourceTest {
 		user.setId(userId);
 		user.setName("Dani");
 		
-		Mockito.when(userService.getUserById(userId)).thenReturn(user);
+		Mockito.when(userService.getUserById(userId)).thenReturn(Optional.fromNullable(user));
 		
         addResource(new UserResource(userService));
 		

@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
 import org.ujobs.model.Job;
 import org.ujobs.service.data.JobService;
 import org.ujobs.service.exceptions.DataValidityException;
@@ -34,7 +35,7 @@ public class JobResource {
 	@Timed
 	public Job getJobByID(@PathParam("jobId") String jobId)
 	{
-		return jobService.getJobById(jobId);
+		return jobService.getJobById(ObjectId.massageToObjectId(jobId));
 	}
 	
 	@PUT
